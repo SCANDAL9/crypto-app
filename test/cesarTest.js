@@ -1,4 +1,4 @@
-import { cifrarCesar, descifrarCesar } from "../src/ciphers/cesar.js";
+import { cifrarCesar, descifrarCesar } from "../src/ciphers_library/cesar.js";
 
 // Función simple de "assert"
 function assertEquals(actual, expected, testName) {

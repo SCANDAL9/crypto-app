@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import {
-  caesarEncrypt,
-  caesarDecrypt,
+  cifrarCesar,
   descifrarCesar,
-} from "../ciphers/cesar.js";
+} from "../ciphers_library/cesar.js";
 
 function CipherPanel({ type }) {
   const [text, setText] = useState("");
