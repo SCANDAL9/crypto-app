@@ -1,0 +1,8 @@
+.main-content {
+  flex: 1;
+  padding: 2rem;
+  background-color: rgba(51, 65, 85, 0.3);
+  border-radius: 0.5rem;
+  border: 1px solid #475569;
+  min-height: 80vh;
+}

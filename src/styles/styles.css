@@ -175,6 +175,45 @@ button:hover {
   visibility: visible;
 }
 
+/*search bar */
+.icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #94a3b8; /* slate-400 */
+}
+
+.input-search {
+  width: 100%;
+  padding: 0.5rem 1rem 0.5rem 2.5rem; /* espacio a la izquierda para el ícono */
+  background-color: rgba(51, 65, 85, 0.5); /* slate-700/50 */
+  border: 1px solid #475569; /* slate-600 */
+  border-radius: 0.5rem;
+  color: white;
+}
+.input-search::placeholder {
+  color: #94a3b8; /* slate-400 */
+}
+
+.input-search:focus {
+  outline: none;
+  border-color: #06b6d4; /* cyan-500 */
+  box-shadow: 0 0 0 1px #06b6d4;
+}
+
+.search-icon {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #94a3b8;
+}
+
+input.search-input {
+  padding-left: 36px; /* espacio para el icono */
+}
+
 
 
 

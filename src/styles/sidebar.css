@@ -1,0 +1,334 @@
+/* Contenedor principal del sidebar */
+.sidebar-container {
+  position: relative; /* Corregido de 'adsolute' */
+  display: flex;
+  align-items: flex-start;
+  height: 100vh;
+  box-sizing: border-box;
+  overflow: hidden;
+  z-index: 10;
+  pointer-events: auto;
+  user-select: auto;
+  touch-action: auto;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+/* Sidebar principal */
+.sidebar {
+  width: 250px;
+  background-color: rgba(30, 41, 59, 0.5);
+  padding: 1rem;
+  border-right: 1px solid #475569;
+  overflow-y: auto;
+  height: 100vh;
+  box-sizing: border-box;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(100, 116, 139, 0.5) transparent;
+  
+  /* Estilos para el scrollbar en WebKit */
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(100, 116, 139, 0.5);
+    border-radius: 4px;
+  }
+  
+  backdrop-filter: blur(5px);
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: white;
+  position: relative;
+  background-clip: padding-box;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+
+  /* En móviles sigue siendo overlay */
+  @media (max-width: 768px) {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 25;
+    transform: translateX(-100%);
+  }
+}
+
+/* Headers del sidebar */
+.sidebar h2 {
+  margin: 0 0 1rem 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-align: center;
+  pointer-events: none;
+  user-select: none;
+  touch-action: none;
+  opacity: 0.9;
+  transition: opacity 0.3s ease;
+}
+
+.sidebar h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.25rem;
+  font-weight: 500;
+  text-align: center;
+  pointer-events: none;
+  user-select: none;
+  touch-action: none;
+  opacity: 0.9;
+  transition: opacity 0.3s ease;
+}
+
+.sidebar p {
+  margin: 0 0 1rem 0;
+  font-size: 0.875rem;
+  text-align: center;
+  color: #94a3b8;
+  opacity: 0.8;
+  pointer-events: none;
+  user-select: none;
+  touch-action: none;
+}
+
+/* Lista de cifrados */
+.cipher-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  max-height: calc(100vh - 6rem);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(100, 116, 139, 0.5) transparent;
+  
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(100, 116, 139, 0.3);
+    border-radius: 3px;
+  }
+}
+
+/* Botones de cifrado */
+.cipher-btn {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem;
+  width: 100%;
+  border: none;
+  background-color: transparent;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  color: white;
+  text-align: left;
+  font-size: 0.9rem;
+  font-weight: 400;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  transition: all 0.2s ease;
+  gap: 0.75rem;
+  min-height: 2.5rem;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.cipher-btn:hover {
+  background-color: rgba(51, 65, 85, 0.6);
+  box-shadow: 0 0 15px rgba(51, 65, 85, 0.7);
+  transform: none;
+}
+
+
+
+.cipher-btn.selected {
+  background-color: rgba(6, 182, 212, 0.2);
+  border: 1px solid rgba(6, 182, 212, 0.5);
+  box-shadow: 0 0 15px rgba(6, 182, 212, 0.5);
+}
+
+/* Contenido del botón */
+.cipher-content {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 0.75rem;
+}
+
+.cipher-info {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.cipher-name {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+  line-height: 1.2;
+  color: white;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cipher-description {
+  display: block;
+  color: #94a3b8;
+  font-size: 0.75rem;
+  margin-top: 0.125rem;
+  font-style: italic;
+  line-height: 1.3;
+  max-height: 2.4em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: left;
+  border-radius: 0.3rem;
+  padding: 0.1rem 0.25rem;
+  background-color: rgba(100, 116, 139, 0.2);
+
+  pointer-events: none;
+  user-select: none;
+  touch-action: none;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+/* Botón de toggle */
+.sidebar-toggle {
+  position: fixed; /* Cambiado a fixed para mejor comportamiento */
+  top: 1rem;
+  left: 1rem;
+  z-index: 30;
+  background-color: rgba(51, 65, 85, 0.8);
+  border: 1px solid rgba(100, 116, 139, 0.3);
+  border-radius: 0.375rem;
+  padding: 0.5rem;
+  font-size: 1.25rem;
+  cursor: pointer;
+  color: white;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(8px);
+  min-width: 2.25rem;
+  min-height: 2.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar-toggle:hover {
+  background-color: rgba(51, 65, 85, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  transform: scale(1.05);
+}
+
+.sidebar-toggle:focus {
+  outline: 2px solid rgba(6, 182, 212, 0.5);
+  outline-offset: 2px;
+}
+
+/* Estados del sidebar */
+.sidebar.open {
+  width: 250px;
+  padding: 1rem;
+  border-right: 1px solid #475569;
+  background-color: rgba(30, 41, 59, 0.5);
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  pointer-events: auto;
+  user-select: auto;
+  touch-action: auto;
+  opacity: 1;
+  overflow-y: auto;
+  transform: translateX(0);
+}
+
+.sidebar.closed {
+  width: 0;
+  padding: 0;
+  overflow: hidden;
+  border: none;
+  background-color: transparent;
+  box-shadow: none;
+  pointer-events: none;
+  user-select: none;
+  touch-action: none;
+  opacity: 0;
+  transform: translateX(0);
+}
+
+/* Overlay para móviles */
+.sidebar-overlay {
+  display: none;
+}
+
+/* Responsive para móviles */
+@media (max-width: 768px) {
+  .sidebar.open {
+    transform: translateX(0);
+    width: 250px;
+    opacity: 1;
+    pointer-events: auto;
+  }
+  
+  .sidebar.closed {
+    transform: translateX(-100%);
+    width: 250px; /* Mantiene el ancho para la animación */
+    padding: 1rem;
+    opacity: 1;
+    border-right: 1px solid #475569;
+    background-color: rgba(30, 41, 59, 0.5);
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .sidebar-overlay {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 20;
+    backdrop-filter: blur(2px);
+  }
+  
+  .sidebar-container {
+    height: auto;
+  }
+}
+
+/* Estado sin cifrados */
+.no-ciphers {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: #94a3b8;
+  font-style: italic;
+  opacity: 0.7;
+}
+
+/* Mejora para el positioning del toggle cuando sidebar está cerrado */
+.sidebar.closed + .sidebar-toggle {
+  left: 1rem;
+  pointer-events: auto;
+  user-select: auto;
+  touch-action: auto;
+  opacity: 1;
+  transition: all 0.3s ease;
+}
+
+/* Animaciones suaves para usuarios que las prefieren */
+@media (prefers-reduced-motion: reduce) {
+  .sidebar,
+  .sidebar-toggle,
+  .cipher-btn,
+  .cipher-icon,
+  .cipher-description {
+    transition: none;
+  }
+}

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useEffect } from 'react';
-import DoublePanel from './components/DoublePanel.jsx';
+import CipherDashboard from './components/CipherDashboard.jsx';
 
 function App() {
   useEffect(() => {
@@ -10,7 +10,7 @@ function App() {
   return (
     <div>
       <h1> Cifrado Modular</h1>
-      <DoublePanel />
+      <CipherDashboard />
     </div>
   );
 }
