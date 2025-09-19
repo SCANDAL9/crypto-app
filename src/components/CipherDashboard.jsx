@@ -3,6 +3,7 @@ import CipherPanel from "./CipherPanel.jsx";
 import Header from "./Header.jsx";
 import Sidebar from "./Sidebar.jsx";
 import MainContent from "./MainContent.jsx";
+import { SettingsProvider } from "./context/SettingsContext.jsx";
 
 const ciphers = [
   { id: "cesar", name: "César", description: "Cifrado por desplazamiento" },
@@ -20,17 +21,20 @@ function CipherDashboard() {
   );
 
   return (
-  <div style={{ display: "flex", height: "100vh" }}>
-      <Sidebar
-        ciphers={filteredCiphers}
-        selectedCipher={selectedCipher}
-        setSelectedCipher={setSelectedCipher}
-      />
-      <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
-        <Header searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-        <MainContent selectedCipher={selectedCipher} />
+    <SettingsProvider>
+      <div style={{ display: "flex", height: "100vh" }}>
+        <Sidebar
+          ciphers={filteredCiphers}
+          selectedCipher={selectedCipher}
+          setSelectedCipher={setSelectedCipher}
+        />
+        <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+          <Header searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+          <MainContent selectedCipher={selectedCipher} />
+        </div>
       </div>
-    </div>
+    </SettingsProvider>
+
   );
 }
 

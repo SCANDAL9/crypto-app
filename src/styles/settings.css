@@ -1,0 +1,111 @@
+/* Contenedor overlay para el sidebar de settings */
+.settings-modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.3); /* fondo semi-transparente */
+  z-index: 1000;
+  pointer-events: auto;
+  user-select: auto;
+  touch-action: auto;
+  transition: background-color 0.3s ease;
+}
+
+/* Sidebar de settings */
+.settings-content {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 280px;
+  max-width: 100%;
+  height: 100vh;
+  background-color: rgba(30, 41, 59, 0.5); /* igual que tu sidebar principal */
+  backdrop-filter: blur(5px);
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  color: white;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  border-radius: 8px 0 0 8px;
+  overflow-y: auto;
+}
+
+/* Mostrar el sidebar */
+.settings-modal.show .settings-content {
+  transform: translateX(0);
+}
+
+/* Título */
+.settings-content h2 {
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-align: center;
+  opacity: 0.9;
+}
+
+/* Labels */
+.settings-content label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #cbd5e1;
+  text-align: left;
+}
+
+/* Inputs y selects */
+.settings-content select,
+.settings-content input[type="text"] {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 1rem;
+  border-radius: 6px;
+  border: 1px solid rgba(100, 116, 139, 0.5);
+  background-color: rgba(51, 65, 85, 0.6);
+  color: white;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.settings-content select:focus,
+.settings-content input[type="text"]:focus {
+  border-color: rgba(6, 182, 212, 0.5);
+}
+
+/* Botones de acción */
+.settings-actions {
+  margin-top: auto;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.settings-actions button {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.2s;
+}
+
+.settings-actions button:hover {
+  opacity: 0.85;
+}
+
+.settings-actions .save-btn {
+  background-color: rgba(6, 182, 212, 0.8);
+  color: white;
+}
+
+.settings-actions .cancel-btn {
+  background-color: rgba(100, 116, 139, 0.6);
+  color: #f1f5f9;
+}

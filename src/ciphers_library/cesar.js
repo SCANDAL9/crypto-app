@@ -15,12 +15,12 @@ export function cifrarCesar(plaintext, shift, options = {}) {
   const text = normalize(plaintext);
   let result = "";
 
-  options.preserveCase = true; // mantener no-alfabeto
+  const preserveCase = options.preserveCase ?? true; // mantener no-alfabeto
   try {
     for (const ch of text) {
       if (!map.has(ch)) {
-        if (options.preserveCase) {
-          result += ch; 
+        if (preserveCase) {
+          result += ch;
         }
         continue;
       }

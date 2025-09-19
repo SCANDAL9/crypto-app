@@ -1,7 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
+import SettingsMain from './SettingsMain';
 import '../styles/header.css';
+import '../styles/settings.css';
 
 function Header({ searchTerm, setSearchTerm }) {
+  const [showSettings, setShowSettings] = useState(false);
+
   return (
     <header className="header">
       <div className="header-left">
@@ -21,8 +25,16 @@ function Header({ searchTerm, setSearchTerm }) {
       </div>
 
       <div className="header-right">
-        <button className="settings-btn">⚙️</button>
+        <button className="settings-btn"
+          onClick={() => setShowSettings(true)}>⚙️
+        </button>
       </div>
+
+      {showSettings && (
+        <div className="settings-modal show">
+          <SettingsMain onClose={() => setShowSettings(false)} />
+        </div>
+      )}
     </header>
   );
 }

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { cifrarCesar, descifrarCesar } from "../ciphers_library/cesar.js";
+import { useSettings } from "./context/SettingsContext.jsx";
 
 function CesarPanel({ type }) {
   const [text, setText] = useState("");
@@ -7,9 +8,32 @@ function CesarPanel({ type }) {
   const [output, setOutput] = useState("");
   const [copied, setCopied] = useState(false);
 
+  const { alphabetType, customAlphabet } = useSettings();
+
+  const getAlphabetOptions = () => {
+    switch (alphabetType) {
+      case "mayusculas":
+        return { normalize: "uppercase" };
+      case "minusculas":
+        return { normalize: "lowercase" };
+      case "mayusminus":
+        return { normalize: "mixed" };
+      case "numeros":
+        return { normalize: "numbers" };
+      case "alfanumerico":
+        return { normalize: "alphanumeric" };
+      case "completo":
+        return { normalize: "full" };
+      case "personalizado":
+        return { normalize: "custom", alphabet: customAlphabet };
+      default:
+        return { normalize: "uppercase" };
+    }
+  };
+
   const handleAction = () => {
     if (!text) return;
-    const options = { normalize: "uppercase" };
+    const options = getAlphabetOptions();
     let result = "";
 
     result =

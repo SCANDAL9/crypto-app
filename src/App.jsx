@@ -9,7 +9,6 @@ function App() {
 
   return (
     <div>
-      <h1> Cifrado Modular</h1>
       <CipherDashboard />
     </div>
   );
