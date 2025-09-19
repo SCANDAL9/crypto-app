@@ -8,38 +8,73 @@ function CesarPanel({ type }) {
   const [output, setOutput] = useState("");
   const [copied, setCopied] = useState(false);
 
-  const { alphabetType, customAlphabet } = useSettings();
+  const {
+    alphabetType,
+    customAlphabet,
+    enableNormalization,
+    preserveCase
+  } = useSettings();
 
   const getAlphabetOptions = () => {
     switch (alphabetType) {
       case "mayusculas":
-        return { normalize: "uppercase" };
+        return { alphabet: "ABCDEFGHIJKLMNOPQRSTUVWXYZ" };
       case "minusculas":
-        return { normalize: "lowercase" };
+        return { alphabet: "abcdefghijklmnopqrstuvwxyz" };
       case "mayusminus":
-        return { normalize: "mixed" };
-      case "numeros":
-        return { normalize: "numbers" };
+        return {
+          alphabet: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
+        };
+      case "simbolos":
+        return {
+          alphabet: " !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~",
+        };
       case "alfanumerico":
-        return { normalize: "alphanumeric" };
-      case "completo":
-        return { normalize: "full" };
+        return {
+          alphabet:
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789",
+        };
+      case "numeros":
+        return { alphabet: "0123456789" };
       case "personalizado":
-        return { normalize: "custom", alphabet: customAlphabet };
+        return { alphabet: customAlphabet };
       default:
-        return { normalize: "uppercase" };
+        return { alphabet: "ABCDEFGHIJKLMNOPQRSTUVWXYZ" };
+    }
+  };
+
+  const normalizeTextInput = (inputText) => {
+    if (!enableNormalization) return inputText;
+
+    switch (alphabetType) {
+      case "mayusculas":
+        return inputText.toUpperCase();
+      case "minusculas":
+        return inputText.toLowerCase();
+      case "mayusminus":
+      case "simbolos":
+      case "alfanumerico":
+      case "numeros":
+      case "personalizado":
+      default:
+        return inputText;
     }
   };
 
   const handleAction = () => {
     if (!text) return;
-    const options = getAlphabetOptions();
-    let result = "";
 
+    const processedText = normalizeTextInput(text);
+    const options = {
+      alphabet: getAlphabetOptions().alphabet,
+      preserveCase: preserveCase
+    };
+
+    let result = "";
     result =
       type === "encrypt"
-        ? cifrarCesar(text, shift, options)
-        : descifrarCesar(text, shift, options);
+        ? cifrarCesar(processedText, shift, options)
+        : descifrarCesar(processedText, shift, options);
 
     setOutput(result);
   };
@@ -79,8 +114,12 @@ function CesarPanel({ type }) {
 
       <div className="output-container">
         <div className="output">{output || "Resultado..."}</div>
-        <button className="copy-btn" onClick={copyOutput}>Copy</button>
-        <div className={`copy-msg ${copied ?  "show" : ""}`}>¡Texto copiado!</div>
+        <button className="copy-btn" onClick={copyOutput}>
+          Copy
+        </button>
+        <div className={`copy-msg ${copied ? "show" : ""}`}>
+          ¡Texto copiado!
+        </div>
       </div>
     </div>
   );

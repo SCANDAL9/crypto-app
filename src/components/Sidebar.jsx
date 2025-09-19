@@ -6,10 +6,6 @@ function Sidebar({ ciphers, selectedCipher, setSelectedCipher }) {
 
   const handleCipherSelect = (cipherId) => {
     setSelectedCipher(cipherId);
-    // En pantallas móviles, cerrar sidebar después de seleccionar
-    if (window.innerWidth <= 768) {
-      setIsOpen(false);
-    }
   };
 
   return (
@@ -21,13 +17,6 @@ function Sidebar({ ciphers, selectedCipher, setSelectedCipher }) {
       >
         {isOpen ? '✕' : '☰'}
       </button>
-       {/* Overlay para cerrar en móvil */}
-      {isOpen && (
-        <div 
-          className="sidebar-overlay"
-          onClick={() => setIsOpen(false)}
-        />
-      )}
 
       <aside className={`sidebar ${isOpen ? 'open' : 'closed'}`}>
         <div className="sidebar-header">
@@ -49,7 +38,7 @@ function Sidebar({ ciphers, selectedCipher, setSelectedCipher }) {
                   <div className="cipher-info">
                     <strong className="cipher-name">{cipher.name}</strong>
                     <small className="cipher-description">
-                      {cipher.description}
+                      {cipher.type}
                     </small>
                   </div>
                 </div>

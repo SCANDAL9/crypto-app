@@ -5,9 +5,20 @@ const SettingsContext = createContext();
 export function SettingsProvider({ children }) {
     const [alphabetType, setAlphabetType] = useState('mayusculas');
     const [customAlphabet, setCustomAlphabet] = useState('');
+    const [enableNormalization, setEnableNormalization] = useState(false);
+    const [preserveCase, setPreserveCase] = useState(true);
 
     return (
-        <SettingsContext.Provider value={{ alphabetType, setAlphabetType, customAlphabet, setCustomAlphabet }}>
+        <SettingsContext.Provider value={{ 
+            alphabetType, 
+            setAlphabetType, 
+            customAlphabet, 
+            setCustomAlphabet,
+            enableNormalization,
+            setEnableNormalization,
+            preserveCase,
+            setPreserveCase 
+            }}>
             {children}
         </SettingsContext.Provider>
     );

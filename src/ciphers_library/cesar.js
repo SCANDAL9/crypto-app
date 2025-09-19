@@ -6,13 +6,8 @@ export function cifrarCesar(plaintext, shift, options = {}) {
   const alphabet = (options.alphabet || "ABCDEFGHIJKLMNOPQRSTUVWXYZ").split("");
   const n = alphabet.length;
   const map = new Map(alphabet.map((c,i)=>[c,i]));
-  const normalize = options.normalize === 'uppercase' 
-      ? s => s.toUpperCase() 
-      : options.normalize ==='lowercase'
-        ? s => s.toLowerCase()
-        : s => s;
 
-  const text = normalize(plaintext);
+  const text = plaintext;
   let result = "";
 
   const preserveCase = options.preserveCase ?? true; // mantener no-alfabeto
