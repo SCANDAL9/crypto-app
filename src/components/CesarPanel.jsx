@@ -15,7 +15,7 @@ function CesarPanel({ type }) {
     preserveCase
   } = useSettings();
 
-  const getAlphabetOptions = () => {
+  const getAlphabet = () => {
     switch (alphabetType) {
       case "mayusculas":
         return { alphabet: "ABCDEFGHIJKLMNOPQRSTUVWXYZ" };
@@ -61,20 +61,25 @@ function CesarPanel({ type }) {
     }
   };
 
+  const deleteCase = (inputText, alphabet) => {
+    return inputText
+      .split("")
+      .filter(char => alphabet.includes(char)) // solo dejamos los que están en el alfabeto
+      .join("");
+  }
+
   const handleAction = () => {
     if (!text) return;
+    const alphabet = getAlphabet().alphabet;
 
-    const processedText = normalizeTextInput(text);
-    const options = {
-      alphabet: getAlphabetOptions().alphabet,
-      preserveCase: preserveCase
-    };
-
+    let processedText = preserveCase ? text : deleteCase(text, alphabet);
+    processedText = normalizeTextInput(processedText);
+    
     let result = "";
     result =
       type === "encrypt"
-        ? cifrarCesar(processedText, shift, options)
-        : descifrarCesar(processedText, shift, options);
+        ? cifrarCesar(processedText, shift, alphabet)
+        : descifrarCesar(processedText, shift, alphabet);
 
     setOutput(result);
   };
