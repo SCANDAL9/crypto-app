@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import SettingsMain from './SettingsMain';
+import SettingsMain from '../components/SettingsMain';
 import '../styles/header.css';
 import '../styles/settings.css';
 

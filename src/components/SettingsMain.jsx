@@ -1,5 +1,5 @@
 
-import {useSettings} from "./context/SettingsContext";
+import {useSettings} from "../context/SettingsContext";
 import "../styles/settings.css";
 
 function SettingsMain({onClose, show}) {
