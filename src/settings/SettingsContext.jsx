@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useState } from 'react';
-import CipherPanel from '../components/CipherPanel';
 
 const SettingsContext = createContext();
 

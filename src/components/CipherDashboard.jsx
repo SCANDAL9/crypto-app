@@ -3,7 +3,7 @@ import CipherPanel from "./CipherPanel.jsx";
 import Header from "../layout/Header.jsx";
 import Sidebar from "../layout/Sidebar.jsx";
 import MainContent from "./MainContent.jsx";
-import { SettingsProvider } from "../context/SettingsContext.jsx";
+import { SettingsProvider } from "../settings/SettingsContext.jsx";
 
 import ciphers from "../utils/ciphersData.js";
 
@@ -11,9 +11,10 @@ function CipherDashboard() {
   const [selectedCipher, setSelectedCipher] = useState("cesar");
   const [searchTerm, setSearchTerm] = useState("");
 
-  const filteredCiphers = ciphers.filter((cipher) =>
-    cipher.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    cipher.type.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredCiphers = ciphers.filter(
+    (cipher) =>
+      cipher.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      cipher.type.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -30,7 +31,6 @@ function CipherDashboard() {
         </div>
       </div>
     </SettingsProvider>
-
   );
 }
 
