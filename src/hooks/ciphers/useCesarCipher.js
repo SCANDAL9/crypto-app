@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { cifrarCesar, descifrarCesar } from '../ciphers_library/cesar.js';
-import { getAlphabetByType, processTextForCipher } from '../utils/textProcessing.js';
+import { cifrarCesar, descifrarCesar } from '../../ciphers_library/cesar.js';
+import { getAlphabetByType, processTextForCipher } from '../../utils/textProcessing.js';
 
 export const useCesarCipher = (settings) => {
   const [text, setText] = useState("");

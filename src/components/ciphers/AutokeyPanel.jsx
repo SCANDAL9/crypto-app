@@ -1,18 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSettings } from "../../settings/SettingsContext.jsx";
-import { useCesarCipher } from "../../hooks/ciphers/useCesarCipher.js";
 import { useCopyToClipboard } from "../../hooks/useCopyToClipboard.js";
 import OutputDisplay from "../OutputDisplay.jsx";
+import { useAutokeyCipher } from "../../hooks/ciphers/useAutokeyCipher.js";
 
 const PANEL_CONFIG = {
   encrypt: { title: "Cifrar 🔏", buttonText: "Cifrar" },
   decrypt: { title: "Descifrar 🔓", buttonText: "Descifrar" },
 };
 
-function CesarPanel({ type }) {
-  const settings = useSettings();
-  const { text, setText, shift, setShift, output, processCipher } =
-    useCesarCipher(settings);
+function AutokeyPanel({ type }) {
+  const settings = useSettings(); // por si quieres usar configuraciones generales
+  const { text, setText, key, setKey, output, processCipher } =
+    useAutokeyCipher(settings);
 
   const { copied, copyToClipboard } = useCopyToClipboard();
 
@@ -27,11 +27,11 @@ function CesarPanel({ type }) {
 
       <>
         <div className="form-group">
-          <label>Shift:</label>
+          <label>Clave:</label>
           <input
-            type="number"
-            value={shift}
-            onChange={(e) => setShift(parseInt(e.target.value, 10))}
+            type="text"
+            value={key}
+            onChange={(e) => setKey(e.target.value)}
           />
         </div>
         <div className="form-group">
@@ -50,4 +50,4 @@ function CesarPanel({ type }) {
   );
 }
 
-export default CesarPanel;
+export default AutokeyPanel;

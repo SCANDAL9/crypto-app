@@ -1,6 +1,7 @@
 import React from "react";
 import CesarPanel from "./ciphers/CesarPanel.jsx";
 import TranspColumnPanel from "./ciphers/TranspColumnPanel.jsx";
+import AutokeyPanel from "./ciphers/AutokeyPanel.jsx";
 // import VigenerePanel from "./VigenerePanel.jsx"; // futuro
 
 function CipherPanel({ type, method }) {
@@ -9,6 +10,8 @@ function CipherPanel({ type, method }) {
       return <CesarPanel type={type} />;
     // case "vigenere":
     //   return <VigenerePanel type={type} />;
+    case "autokey":
+      return  <AutokeyPanel type={type} />;
     case "transposicion-columnas":
       return <TranspColumnPanel type={type} />;
     default:

@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { cifrarTranspColumn, descifrarTranspColumn } from "../../ciphers_library/transposicionColumnas.js";
+import { cifrarAutokey, descifrarAutokey } from "../../ciphers_library/autokey.js";
 import { getAlphabetByType, processTextForCipher } from "../../utils/textProcessing.js";
 
-export const useTranspColumnCipher = (settings) => {
+export const useAutokeyCipher = (settings) => {
   const [text, setText] = useState("");
   const [key, setKey] = useState("KEY");
   const [output, setOutput] = useState("");
@@ -24,8 +24,8 @@ export const useTranspColumnCipher = (settings) => {
 
     const result =
       type === "encrypt"
-        ? cifrarTranspColumn(processedText, key, alphabet)
-        : descifrarTranspColumn(processedText, key, alphabet);
+        ? cifrarAutokey(processedText, key, alphabet)
+        : descifrarAutokey(processedText, key, alphabet);
 
     setOutput(result);
   };

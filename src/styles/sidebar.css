@@ -1,334 +1,387 @@
-/* Contenedor principal del sidebar */
+/* Sidebar Container */
 .sidebar-container {
-  position: relative; /* Corregido de 'adsolute' */
-  display: flex;
-  align-items: flex-start;
-  height: 100vh;
-  box-sizing: border-box;
-  overflow: hidden;
-  z-index: 10;
-  pointer-events: auto;
-  user-select: auto;
-  touch-action: auto;
-  opacity: 1;
-  transition: opacity 0.3s ease;
-}
-
-/* Sidebar principal */
-.sidebar {
-  width: 250px;
-  background-color: rgba(30, 41, 59, 0.5);
-  padding: 1rem;
-  border-right: 1px solid #475569;
-  overflow-y: auto;
-  height: 100vh;
-  box-sizing: border-box;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(100, 116, 139, 0.5) transparent;
-  
-  /* Estilos para el scrollbar en WebKit */
-  &::-webkit-scrollbar {
-    width: 8px;
-  }
-  &::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  &::-webkit-scrollbar-thumb {
-    background-color: rgba(100, 116, 139, 0.5);
-    border-radius: 4px;
-  }
-  
-  backdrop-filter: blur(5px);
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: white;
   position: relative;
-  background-clip: padding-box;
+  z-index: 1000;
+}
+
+/* Main Sidebar */
+.sidebar {
+  position: relative;
+  left: 0;
+  top: 0;
+  width: 280px;
+  height: 100vh;
+  background: rgba(30, 41, 59, 0.95);
+  backdrop-filter: blur(12px);
+  border-right: 1px solid rgba(71, 85, 105, 0.3);
+  box-shadow: 2px 0 20px rgba(0, 0, 0, 0.3);
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: width 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem;
+  will-change: transform;
+}
+
+.sidebar.closed {
+  width: 70px;
+}
+
+/* Header Section */
+.sidebar-header {
+  padding: 1rem 0.5rem 1.5rem 0.5rem;
+  border-bottom: 0;
+  margin-bottom: 1rem;
+}
+
+.toggle-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+}
+
+.sidebar-toggle {
+  width: 36px;
+  height: 36px;
+  background: rgba(51, 65, 85, 0.6);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 250ms ease;
+  outline: 2px solid transparent;
+  outline-offset: -2px;
+}
+
+.sidebar-toggle:hover {
+  background: rgba(37, 99, 235, 0.2);
+  outline: 2px solid rgba(37, 99, 235, 0.5);
+}
+
+.toggle-icons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+}
+
+.toggle-icon {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  fill: #94a3b8;
+  transition: all 250ms ease;
+  position: static;
+}
+
+.sidebar.open .toggle-open {
+  opacity: 1;
+}
+
+.sidebar.open .toggle-close {
+  opacity: 0;
+}
+
+.sidebar.closed .toggle-open {
+  opacity: 0;
+}
+
+.sidebar.closed .toggle-close {
+  opacity: 1;
+}
+
+/* Brand Section */
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem;
+}
+
+.brand-icon {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #2563eb, #3b82f6);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
   flex-shrink: 0;
-  transition: all 0.3s ease;
-
-  /* En móviles sigue siendo overlay */
-  @media (max-width: 768px) {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    z-index: 25;
-    transform: translateX(-100%);
-  }
 }
 
-/* Headers del sidebar */
-.sidebar h2 {
-  margin: 0 0 1rem 0;
-  font-size: 1.5rem;
+.brand-info {
+  overflow: hidden;
+  transition: opacity 300ms ease 150ms;
+}
+
+.sidebar.closed .brand-info {
+  opacity: 0;
+}
+
+.brand-title {
+  color: white;
+  font-size: 1.1rem;
   font-weight: 600;
-  text-align: center;
-  pointer-events: none;
-  user-select: none;
-  touch-action: none;
-  opacity: 0.9;
-  transition: opacity 0.3s ease;
+  margin: 0;
+  line-height: 1.2;
 }
 
-.sidebar h3 {
-  margin: 0 0 0.5rem 0;
-  font-size: 1.25rem;
-  font-weight: 500;
-  text-align: center;
-  pointer-events: none;
-  user-select: none;
-  touch-action: none;
-  opacity: 0.9;
-  transition: opacity 0.3s ease;
-}
-
-.sidebar p {
-  margin: 0 0 1rem 0;
-  font-size: 0.875rem;
-  text-align: center;
+.brand-subtitle {
   color: #94a3b8;
-  opacity: 0.8;
-  pointer-events: none;
-  user-select: none;
-  touch-action: none;
+  font-size: 0.75rem;
+  margin: 0;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
-/* Lista de cifrados */
+/* Content Section */
+.sidebar-content {
+  overflow-y: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+}
+
+.sidebar-content::-webkit-scrollbar {
+  display: none;
+}
+
+.sidebar-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar-content::-webkit-scrollbar-thumb {
+  background: rgba(71, 85, 105, 0.5);
+  border-radius: 2px;
+}
+
+/* Section Headers */
+.section-header {
+  margin-bottom: 0.75rem;
+}
+
+.section-title {
+  color: #94a3b8;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0;
+  padding: 0 0.5rem;
+  transition: opacity 300ms ease 150ms;
+}
+
+.sidebar.closed .section-title {
+  opacity: 0;
+}
+
+/* Section Divider */
+.section-divider {
+  height: 1px;
+  background: rgba(71, 85, 105, 0.2);
+  margin: 1.5rem 0.5rem;
+}
+
+.sidebar.closed .section-divider {
+  margin: 1rem 0.5rem;
+}
+
+/* Cipher List */
 .cipher-list {
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
-  max-height: calc(100vh - 6rem);
-  overflow-y: auto;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(100, 116, 139, 0.5) transparent;
-  
-  &::-webkit-scrollbar {
-    width: 6px;
-  }
-  &::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  &::-webkit-scrollbar-thumb {
-    background-color: rgba(100, 116, 139, 0.3);
-    border-radius: 3px;
-  }
+  margin-bottom: 1rem;
 }
 
-/* Botones de cifrado */
 .cipher-btn {
   display: flex;
   align-items: center;
-  padding: 0.75rem;
-  width: 100%;
-  border: none;
-  background-color: transparent;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  color: white;
-  text-align: left;
-  font-size: 0.9rem;
-  font-weight: 400;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  transition: all 0.2s ease;
   gap: 0.75rem;
-  min-height: 2.5rem;
+  width: 100%;
+  padding: 0.75rem;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 250ms ease;
+  color: #e2e8f0;
+  outline: 2px solid transparent;
+  outline-offset: -2px;
   position: relative;
-  box-sizing: border-box;
 }
 
 .cipher-btn:hover {
-  background-color: rgba(51, 65, 85, 0.6);
-  box-shadow: 0 0 15px rgba(51, 65, 85, 0.7);
-  transform: none;
+  background: rgba(51, 65, 85, 0.5);
 }
 
-
+.cipher-btn:focus {
+  outline: 2px solid rgba(37, 99, 235, 0.6);
+  background: rgba(37, 99, 235, 0.1);
+}
 
 .cipher-btn.selected {
-  background-color: rgba(6, 182, 212, 0.2);
-  border: 1px solid rgba(6, 182, 212, 0.5);
-  box-shadow: 0 0 15px rgba(6, 182, 212, 0.5);
+  background: rgba(37, 99, 235, 0.2);
+  color: white;
+  border: 1px solid rgba(37, 99, 235, 0.3);
 }
 
-/* Contenido del botón */
-.cipher-content {
+.cipher-btn.selected .cipher-icon svg {
+  fill: #3b82f6;
+}
+
+.cipher-icon {
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
-  width: 100%;
-  gap: 0.75rem;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
-.cipher-info {
+.cipher-icon svg {
+  fill: #94a3b8;
+  transition: fill 250ms ease;
+}
+
+.cipher-btn:hover .cipher-icon svg {
+  fill: #3b82f6;
+}
+
+.cipher-content {
   flex: 1;
-  min-width: 0;
   overflow: hidden;
+  transition: opacity 300ms ease 150ms;
+}
+
+.sidebar.closed .cipher-content {
+  opacity: 0;
 }
 
 .cipher-name {
   display: block;
+  font-size: 0.875rem;
   font-weight: 500;
-  margin-bottom: 0.25rem;
-  line-height: 1.2;
-  color: white;
+  margin-bottom: 0.125rem;
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
-.cipher-description {
+.cipher-type {
   display: block;
-  color: #94a3b8;
   font-size: 0.75rem;
-  margin-top: 0.125rem;
-  font-style: italic;
-  line-height: 1.3;
-  max-height: 2.4em;
+  color: #94a3b8;
+  font-weight: 400;
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
-  text-align: left;
-  border-radius: 0.3rem;
-  padding: 0.1rem 0.25rem;
-  background-color: rgba(100, 116, 139, 0.2);
-
-  pointer-events: none;
-  user-select: none;
-  touch-action: none;
-  opacity: 0.8;
-  transition: opacity 0.3s ease;
 }
 
-/* Botón de toggle */
-.sidebar-toggle {
-  position: fixed; /* Cambiado a fixed para mejor comportamiento */
-  top: 1rem;
-  left: 1rem;
-  z-index: 30;
-  background-color: rgba(51, 65, 85, 0.8);
-  border: 1px solid rgba(100, 116, 139, 0.3);
-  border-radius: 0.375rem;
-  padding: 0.5rem;
-  font-size: 1.25rem;
+/* Tools List */
+.tools-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.tool-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.625rem 0.75rem;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
   cursor: pointer;
-  color: white;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(8px);
-  min-width: 2.25rem;
-  min-height: 2.25rem;
+  text-align: left;
+  transition: all 250ms ease;
+  color: #e2e8f0;
+  outline: 2px solid transparent;
+  outline-offset: -2px;
+}
+
+.tool-btn:hover {
+  background: rgba(51, 65, 85, 0.4);
+}
+
+.tool-btn:focus {
+  outline: 2px solid rgba(37, 99, 235, 0.6);
+}
+
+.tool-icon {
+  width: 28px;
+  height: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 
-.sidebar-toggle:hover {
-  background-color: rgba(51, 65, 85, 1);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-  transform: scale(1.05);
+.tool-icon svg {
+  fill: #94a3b8;
+  transition: fill 250ms ease;
 }
 
-.sidebar-toggle:focus {
-  outline: 2px solid rgba(6, 182, 212, 0.5);
-  outline-offset: 2px;
+.tool-btn:hover .tool-icon svg {
+  fill: #3b82f6;
 }
 
-/* Estados del sidebar */
-.sidebar.open {
-  width: 250px;
-  padding: 1rem;
-  border-right: 1px solid #475569;
-  background-color: rgba(30, 41, 59, 0.5);
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-  pointer-events: auto;
-  user-select: auto;
-  touch-action: auto;
-  opacity: 1;
-  overflow-y: auto;
-  transform: translateX(0);
+.tool-name {
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: opacity 300ms ease 150ms;
 }
 
-.sidebar.closed {
-  width: 0;
-  padding: 0;
-  overflow: hidden;
-  border: none;
-  background-color: transparent;
-  box-shadow: none;
-  pointer-events: none;
-  user-select: none;
-  touch-action: none;
+.sidebar.closed .tool-name {
   opacity: 0;
+}
+
+/* Tooltips for collapsed state */
+.sidebar.closed [data-tooltip]::before {
+  content: attr(data-tooltip);
+  position: fixed;
+  left: 80px;
+  background: rgba(15, 23, 42, 0.95);
+  color: white;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-8px);
+  transition: all 250ms ease;
+  z-index: 1000;
+  border: 1px solid rgba(71, 85, 105, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.sidebar.closed [data-tooltip]:hover::before {
+  opacity: 1;
   transform: translateX(0);
 }
 
-/* Overlay para móviles */
-.sidebar-overlay {
-  display: none;
-}
-
-/* Responsive para móviles */
+/* Responsive adjustments for mobile */
 @media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+  }
+  
   .sidebar.open {
     transform: translateX(0);
-    width: 250px;
-    opacity: 1;
-    pointer-events: auto;
   }
   
   .sidebar.closed {
     transform: translateX(-100%);
-    width: 250px; /* Mantiene el ancho para la animación */
-    padding: 1rem;
-    opacity: 1;
-    border-right: 1px solid #475569;
-    background-color: rgba(30, 41, 59, 0.5);
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  .sidebar-overlay {
-    display: block;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 20;
-    backdrop-filter: blur(2px);
-  }
-  
-  .sidebar-container {
-    height: auto;
-  }
-}
-
-/* Estado sin cifrados */
-.no-ciphers {
-  text-align: center;
-  padding: 2rem 1rem;
-  color: #94a3b8;
-  font-style: italic;
-  opacity: 0.7;
-}
-
-/* Mejora para el positioning del toggle cuando sidebar está cerrado */
-.sidebar.closed + .sidebar-toggle {
-  left: 1rem;
-  pointer-events: auto;
-  user-select: auto;
-  touch-action: auto;
-  opacity: 1;
-  transition: all 0.3s ease;
-}
-
-/* Animaciones suaves para usuarios que las prefieren */
-@media (prefers-reduced-motion: reduce) {
-  .sidebar,
-  .sidebar-toggle,
-  .cipher-btn,
-  .cipher-icon,
-  .cipher-description {
-    transition: none;
+    width: 280px;
   }
 }

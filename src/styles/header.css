@@ -12,7 +12,7 @@
   z-index: 1000;
   backdrop-filter: blur(10px);
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-
+  position: relative;
 }
 
 .search-container {
@@ -57,7 +57,16 @@
   border-color: #2563eb; /* blue-600 */
   outline: none;
 }
-.header-left .logo {
+.header-left .logo{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  flex-shrink: 0;
+  max-width: 500px;
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   font-weight: bold;
   color: white;
   font-size: 1.25rem;
@@ -65,7 +74,9 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  
 }
+
 
 .header-center {
   flex: 1;
