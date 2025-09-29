@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { cifrarAutokey, descifrarAutokey } from "../../ciphers_library/autokey.js";
-import { getAlphabetByType, processTextForCipher } from "../../utils/textProcessing.js";
+import { getAlphabetByType } from "../../utils/alphabetUtils.js";
+import { processTextForCipher } from "../../utils/textProcessing.js";
 
 export const useAutokeyCipher = (settings) => {
   const [text, setText] = useState("");

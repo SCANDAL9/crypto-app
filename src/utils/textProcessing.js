@@ -3,7 +3,7 @@ export const normalizeText = (text, alphabetType, enableNormalization) => {
 
   const normalizers = {
     mayusculas: (text) => text.toUpperCase(),
-    minusculas: (text) => text.toLowerCase()
+    minusculas: (text) => text.toLowerCase(),
   };
 
   return normalizers[alphabetType] ? normalizers[alphabetType](text) : text;
@@ -12,25 +12,24 @@ export const normalizeText = (text, alphabetType, enableNormalization) => {
 export const filterByAlphabet = (text, alphabet) => {
   return text
     .split("")
-    .filter(char => alphabet.includes(char))
+    .filter((char) => alphabet.includes(char))
     .join("");
 };
 
-export const processTextForCipher = (text, alphabet, preserveCase, alphabetType, enableNormalization) => {
-  let processedText = preserveCase ? text : filterByAlphabet(text, alphabet);
-  return normalizeText(processedText, alphabetType, enableNormalization);
-};
-
-export const getAlphabetByType = (alphabetType, customAlphabet) => {
-  const alphabets = {
-    mayusculas: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-    minusculas: "abcdefghijklmnopqrstuvwxyz",
-    mayusminus: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
-    simbolos: " !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~",
-    alfanumerico: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789",
-    numeros: "0123456789",
-    personalizado: customAlphabet
-  };
-
-  return alphabets[alphabetType] || alphabets.mayusculas;
+export const processTextForCipher = (
+  text,
+  alphabet,
+  preserveCase,
+  alphabetType,
+  enableNormalization
+) => {
+  // Primero normalizamos el texto si está habilitado
+  let processedText = normalizeText(text, alphabetType, enableNormalization);
+  
+  // Luego filtramos por alfabeto si no preservamos el case
+  if (!preserveCase) {
+    processedText = filterByAlphabet(processedText, alphabet);
+  }
+  
+  return processedText;
 };

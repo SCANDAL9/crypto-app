@@ -14,6 +14,33 @@ function SettingsMain({ onClose, show = true }) {
     setPreserveCase,
   } = useSettings();
 
+  // Función para validar y limpiar el alfabeto personalizado
+  const handleCustomAlphabetChange = (value) => {
+    // Remover caracteres duplicados manteniendo el primer ocurrencia
+    const uniqueChars = [...new Set(value.split(''))].join('');
+    setCustomAlphabet(uniqueChars);
+  };
+
+  // Función para validar el alfabeto personalizado
+  const validateCustomAlphabet = (alphabet) => {
+    if (!alphabet || alphabet.length < 2) {
+      return { isValid: false, message: "El alfabeto debe tener al menos 2 caracteres únicos" };
+    }
+    
+    const uniqueChars = new Set(alphabet.split('')).size;
+    const originalSize = alphabet.length;
+    
+    if (uniqueChars !== originalSize) {
+      return { isValid: false, message: "El alfabeto contiene caracteres duplicados" };
+    }
+    
+    return { isValid: true, message: "" };
+  };
+
+  const alphabetValidation = alphabetType === "personalizado" 
+    ? validateCustomAlphabet(customAlphabet) 
+    : { isValid: true, message: "" };
+
   return (
     <div className={`settings-modal ${show ? "show" : ""}`} onClick={onClose}>
       <div className="settings-content" onClick={(e) => e.stopPropagation()}>
@@ -67,11 +94,17 @@ function SettingsMain({ onClose, show = true }) {
                   type="text"
                   placeholder="Ingrese su alfabeto personalizado (ej: ABCDEFG123)"
                   value={customAlphabet}
-                  onChange={(e) => setCustomAlphabet(e.target.value)}
+                  onChange={(e) => handleCustomAlphabetChange(e.target.value)}
+                  className={!alphabetValidation.isValid ? "input-error" : ""}
                 />
                 <small className="input-hint">
-                  Cada carácter será usado para el cifrado. 
+                  Cada carácter será usado para el cifrado. No se permiten caracteres duplicados.
                 </small>
+                {!alphabetValidation.isValid && (
+                  <small className="input-error-message">
+                    ⚠️ {alphabetValidation.message}
+                  </small>
+                )}
               </div>
             )}
           </div>
@@ -122,7 +155,11 @@ function SettingsMain({ onClose, show = true }) {
 
         {/* Footer */}
         <div className="settings-footer">
-          <button className="btn-primary" onClick={onClose}>
+          <button 
+            className="btn-primary" 
+            onClick={onClose}
+            disabled={alphabetType === "personalizado" && !alphabetValidation.isValid}
+          >
             <CheckIcon width={20} height={20}/>
             Aplicar Cambios
           </button>

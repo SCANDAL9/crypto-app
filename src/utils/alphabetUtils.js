@@ -9,5 +9,18 @@ export const getAlphabetByType = (alphabetType, customAlphabet) => {
     personalizado: customAlphabet
   };
 
-  return alphabets[alphabetType] || alphabets.mayusculas;
+  let selectedAlphabet = alphabets[alphabetType] || alphabets.mayusminus;
+
+  // Para alfabeto personalizado, asegurar que no haya caracteres duplicados
+  if (alphabetType === "personalizado" && customAlphabet) {
+    selectedAlphabet = [...new Set(customAlphabet.split(''))].join('');
+    
+    // Validar que tenga al menos 2 caracteres
+    if (selectedAlphabet.length < 2) {
+      console.warn("Alfabeto personalizado inválido");
+      selectedAlphabet = alphabets.mayusminus;
+    }
+  }
+
+  return selectedAlphabet;
 };

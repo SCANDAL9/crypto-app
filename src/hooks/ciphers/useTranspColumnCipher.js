@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { cifrarTranspColumn, descifrarTranspColumn } from "../../ciphers_library/transposicionColumnas.js";
-import { getAlphabetByType, processTextForCipher } from "../../utils/textProcessing.js";
+import { getAlphabetByType } from "../../utils/alphabetUtils.js";
+import { processTextForCipher } from "../../utils/textProcessing.js";
 
 export const useTranspColumnCipher = (settings) => {
   const [text, setText] = useState("");
