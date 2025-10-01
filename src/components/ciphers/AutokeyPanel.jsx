@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import { useSettings } from "../../settings/SettingsContext.jsx";
 import { useCopyToClipboard } from "../../hooks/useCopyToClipboard.js";
 import OutputDisplay from "../OutputDisplay.jsx";
-import { useAutokeyCipher } from "../../hooks/ciphers/useAutokeyCipher.js";
+import { cifrarAutokey, descifrarAutokey } from "../../ciphers_library/autokey.js";
+//import { useAutokeyCipher } from "../../hooks/ciphers/useAutokeyCipher.js";
+import { useGenericCipher } from "../../hooks/useGenericCipher.js";
 
 const PANEL_CONFIG = {
   encrypt: { title: "Cifrar 🔏", buttonText: "Cifrar" },
@@ -10,9 +12,16 @@ const PANEL_CONFIG = {
 };
 
 function AutokeyPanel({ type }) {
-  const settings = useSettings(); // por si quieres usar configuraciones generales
+  const settings = useSettings();
+
+  const cipherFunctions = { 
+    type: 'autokey', 
+    encrypt: cifrarAutokey, 
+    decrypt: descifrarAutokey 
+  };
+
   const { text, setText, key, setKey, output, processCipher } =
-    useAutokeyCipher(settings);
+    useGenericCipher(cipherFunctions, settings, "KEY");
 
   const { copied, copyToClipboard } = useCopyToClipboard();
 

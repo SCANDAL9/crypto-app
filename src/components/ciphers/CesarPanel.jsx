@@ -1,8 +1,10 @@
 import React from "react";
 import { useSettings } from "../../settings/SettingsContext.jsx";
-import { useCesarCipher } from "../../hooks/ciphers/useCesarCipher.js";
+//import { useCesarCipher } from "../../hooks/ciphers/useCesarCipher.js";
+import { useGenericCipher } from "../../hooks/useGenericCipher.js";
 import { useCopyToClipboard } from "../../hooks/useCopyToClipboard.js";
 import OutputDisplay from "../OutputDisplay.jsx";
+import { cifrarCesar, descifrarCesar } from "../../ciphers_library/cesar.js";
 
 const PANEL_CONFIG = {
   encrypt: { title: "Cifrar 🔏", buttonText: "Cifrar" },
@@ -11,8 +13,17 @@ const PANEL_CONFIG = {
 
 function CesarPanel({ type }) {
   const settings = useSettings();
-  const { text, setText, shift, setShift, output, processCipher } =
-    useCesarCipher(settings);
+
+
+  const cipherFunctions = { 
+    type: 'caesar', 
+    encrypt: cifrarCesar, 
+    decrypt: descifrarCesar 
+  };
+
+  const { text, setText, key, setKey, output, processCipher } =
+    useGenericCipher(cipherFunctions, settings, "3");
+
 
   const { copied, copyToClipboard } = useCopyToClipboard();
 
@@ -30,8 +41,8 @@ function CesarPanel({ type }) {
           <label>Shift:</label>
           <input
             type="number"
-            value={shift}
-            onChange={(e) => setShift(parseInt(e.target.value, 10))}
+            value={key}
+            onChange={(e) => setKey(parseInt(e.target.value, 10))}
           />
         </div>
         <div className="form-group">
