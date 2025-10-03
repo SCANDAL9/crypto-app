@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useSettings } from "../../settings/SettingsContext.jsx";
 import { useCopyToClipboard } from "../../hooks/useCopyToClipboard.js";
 import OutputDisplay from "../OutputDisplay.jsx";
-import { useTranspColumnCipher } from "../../hooks/ciphers/useTranspColumnCipher.js";
+// import { useTranspColumnCipher } from "../../hooks/ciphers/useTranspColumnCipher.js";
 import { useGenericCipher } from "../../hooks/useGenericCipher.js";
 import { cifrarTranspColumn, descifrarTranspColumn } from "../../ciphers_library/transposicionColumnas.js";
 
