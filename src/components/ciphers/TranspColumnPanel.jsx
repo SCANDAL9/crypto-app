@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import { useSettings } from "../../settings/SettingsContext.jsx";
 import { useCopyToClipboard } from "../../hooks/useCopyToClipboard.js";
 import OutputDisplay from "../OutputDisplay.jsx";
-import { useTranspColumnCipher } from "../../hooks/ciphers/useTranspColumnCipher.js";
+// import { useTranspColumnCipher } from "../../hooks/ciphers/useTranspColumnCipher.js";
+import { useGenericCipher } from "../../hooks/useGenericCipher.js";
+import { cifrarTranspColumn, descifrarTranspColumn } from "../../ciphers_library/transposicionColumnas.js";
 
 const PANEL_CONFIG = {
   encrypt: { title: "Cifrar 🔏", buttonText: "Cifrar" },
@@ -10,9 +12,16 @@ const PANEL_CONFIG = {
 };
 
 function TranspColumnPanel({ type }) {
-  const settings = useSettings(); // por si quieres usar configuraciones generales
+  const settings = useSettings(); 
+
+  const cipherFunctions = { 
+    type: 'transposicion-columnas', 
+    encrypt: cifrarTranspColumn, 
+    decrypt: descifrarTranspColumn 
+  };
+
   const { text, setText, key, setKey, output, processCipher } =
-    useTranspColumnCipher(settings);
+    useGenericCipher(cipherFunctions, settings, "KEY");
 
   const { copied, copyToClipboard } = useCopyToClipboard();
 

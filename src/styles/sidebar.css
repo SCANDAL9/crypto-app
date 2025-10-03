@@ -167,12 +167,14 @@
 
 .section-title {
   color: #94a3b8;
-  font-size: 0.75rem;
+  font-size: 1rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  justify-content: center;
+  display: flex;
   margin: 0;
-  padding: 0 0.5rem;
+  padding: 0rem 0rem 0.5rem 0.5rem;
   transition: opacity 300ms ease 150ms;
 }
 
@@ -204,7 +206,7 @@
   align-items: center;
   gap: 0.75rem;
   width: 100%;
-  padding: 0.75rem;
+  padding: 0.625rem 1rem 1.5rem 1.5rem;
   background: transparent;
   border: none;
   border-radius: 8px;

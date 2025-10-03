@@ -204,6 +204,18 @@
   box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
 }
 
+/* Input Error States */
+.settings-content input[type="text"].input-error {
+  border-color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2);
+}
+
+.settings-content input[type="text"].input-error:focus {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.3);
+}
+
 .custom-alphabet-group {
   background: rgba(37, 99, 235, 0.05);
   border: 1px solid rgba(37, 99, 235, 0.2);
@@ -217,6 +229,14 @@
   font-size: 0.75rem;
   color: #94a3b8;
   font-style: italic;
+}
+
+.input-error-message {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  color: #f87171;
+  font-weight: 500;
 }
 
 /* Toggle Groups */
@@ -341,14 +361,22 @@
   box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
 }
 
-.btn-primary:hover {
+.btn-primary:hover:not(:disabled) {
   background: linear-gradient(135deg, #1d4ed8, #2563eb);
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
 }
 
-.btn-primary:active {
+.btn-primary:active:not(:disabled) {
   transform: translateY(0);
+}
+
+.btn-primary:disabled {
+  background: rgba(71, 85, 105, 0.5);
+  color: rgba(156, 163, 175, 0.8);
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
 }
 
 /* Responsive */

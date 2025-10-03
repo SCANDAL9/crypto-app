@@ -22,7 +22,6 @@ function extendKeyAutokey(plaintext, key, alphabetType) {
 
   return extendedKey;
 }
-
 export function cifrarAutokey(plaintext, key, alphabetType) {
   if (typeof plaintext !== "string") {
     throw new Error("El texto a cifrar debe ser una cadena de caracteres");
@@ -39,9 +38,7 @@ export function cifrarAutokey(plaintext, key, alphabetType) {
     const p = alphabetType.indexOf(plaintext[i]);
     const k = alphabetType.indexOf(extendedKey[i]);
 
-    result += p !== -1 && k !== -1 
-        ? alphabetType[(p + k) % n] 
-        : plaintext[i];
+    result += p !== -1 && k !== -1 ? alphabetType[(p + k) % n] : plaintext[i];
   }
 
   return result;
@@ -62,21 +59,19 @@ export function descifrarAutokey(ciphertext, key, alphabetType) {
   for (let i = 0; i < ciphertext.length; i++) {
     const c = alphabetType.indexOf(ciphertext[i]);
     const k = alphabetType.indexOf(extendedKey[i]);
-    
-    const p = c !== -1 && k !== -1 
-        ? (c - k + n) % n 
-        : -1;
 
-    const plainChar = p !== -1 
-        ? alphabetType[p] 
-        : ciphertext[i];
+    const p = c !== -1 && k !== -1 ? (c - k + n) % n : -1;
+
+    const plainChar = p !== -1 ? alphabetType[p] : ciphertext[i];
 
     result += plainChar;
 
-    // Extendemos la clave con el texto descifrado hasta ahora
-    if (alphabetType.includes(plainChar) && 
-    extendedKey.length < ciphertext.length) {
-        extendedKey += plainChar;
+    // Extendemos la clave con el texto descifrado
+    if (
+      alphabetType.includes(plainChar) &&
+      extendedKey.length < ciphertext.length
+    ) {
+      extendedKey += plainChar;
     }
   }
 
