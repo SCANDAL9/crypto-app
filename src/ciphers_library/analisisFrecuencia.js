@@ -3,6 +3,11 @@ export function frequencyAnalysis(text) {
   let total = 0;
 
   for (const ch of text) {
+    // Ignorar espacios, tabulaciones y saltos de línea
+    if (ch === ' ' || ch === '\t' || ch === '\n' || ch === '\r') {
+      continue;
+    }
+    
     counts[ch] = (counts[ch] || 0) + 1;
     total++;
   }
@@ -20,7 +25,3 @@ export function frequencyAnalysis(text) {
   };
 }
 
-const paa = "hello world, word paths";
-const result = frequencyAnalysis(paa);
-
-console.log(result.frequencies);
