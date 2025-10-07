@@ -1,3 +1,4 @@
+// // src/utils/ciphersData.js
 const ciphers = [
   // Sustitución Monoalfabética
   {
@@ -19,7 +20,7 @@ const ciphers = [
     type: "Sustitución Monoalfabética"
   },
 
-  // Sustitución Polialfabética
+  // Sustitución Polialfabética VIGENERE
   {
     id: "vigenere",
     name: "Vigenère",
@@ -75,7 +76,8 @@ const ciphers = [
     name: "Transposición de Columnas",
     description: "Organiza el texto en una cuadrícula y lo lee por columnas según una clave.",
     type: "Transposición por Columnas"
-  }
+  },
+
 ];
 
 export default ciphers;

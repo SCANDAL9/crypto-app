@@ -1,3 +1,4 @@
+// // src/components/MainContent.jsx
 import React from 'react';
 import CipherPanel from './CipherPanel.jsx';
 import '../styles/mainContent.css';

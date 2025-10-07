@@ -1,0 +1,79 @@
+/* src/layout/styles/vigenerePanel.css */
+
+.vigenere-panel {
+  border: 1px solid rgba(59, 130, 246, 0.4); /* azul translúcido */
+  background: rgba(30, 41, 59, 0.5); /* tono slate */
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(10px);
+  padding: 20px;
+  border-radius: 15px;
+  transition: all 0.3s ease;
+}
+
+.vigenere-panel:hover {
+  border-color: rgba(96, 165, 250, 0.7);
+  box-shadow: 0 0 15px rgba(96, 165, 250, 0.4);
+}
+
+.vigenere-title {
+  color: #93c5fd; /* azul claro */
+  text-align: center;
+  font-weight: 600;
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  text-shadow: 0 0 8px rgba(96, 165, 250, 0.5);
+}
+
+.vigenere-input,
+.vigenere-textarea {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+}
+
+.vigenere-input:focus,
+.vigenere-textarea:focus {
+  border-color: rgba(147, 197, 253, 0.9);
+  box-shadow: 0 0 12px rgba(147, 197, 253, 0.6);
+  outline: none;
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.vigenere-btn {
+  background: linear-gradient(135deg, #2563eb, #3b82f6);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  margin-top: 10px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.vigenere-btn:hover {
+  background: linear-gradient(135deg, #1d4ed8, #2563eb);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+  transform: translateY(-2px);
+}
+
+.vigenere-btn:active {
+  transform: scale(0.98);
+}
+
+/* Compatibilidad responsiva */
+@media (max-width: 768px) {
+  .vigenere-panel {
+    padding: 15px;
+  }
+
+  .vigenere-title {
+    font-size: 1.2rem;
+  }
+}
+

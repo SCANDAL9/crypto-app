@@ -1,3 +1,4 @@
+// src/ciphers_library/analisisFrecuencia.js
 export function frequencyAnalysis(text) {
   const counts = {};
   let total = 0;

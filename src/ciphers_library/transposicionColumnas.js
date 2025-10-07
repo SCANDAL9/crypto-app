@@ -1,3 +1,4 @@
+// src/ciphers_library/transposicionColumnas.js
 // Genera el orden de las columnas a partir de la clave
 function getColumnOrder(key) {
   const keyArray = key.split("").map((char, index) => ({ char, index }));

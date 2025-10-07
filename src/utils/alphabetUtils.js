@@ -1,3 +1,4 @@
+// src/utils/alphabetUtils.js
 export const getAlphabetByType = (alphabetType, customAlphabet) => {
   const alphabets = {
     mayusculas: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",

@@ -1,3 +1,4 @@
+//src/hooks/useCopyToClipboard.js
 import { useState } from 'react';
 
 export const useCopyToClipboard = () => {
