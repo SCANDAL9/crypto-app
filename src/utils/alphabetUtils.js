@@ -1,11 +1,11 @@
 // src/utils/alphabetUtils.js
 export const getAlphabetByType = (alphabetType, customAlphabet) => {
   const alphabets = {
-    mayusculas: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-    minusculas: "abcdefghijklmnopqrstuvwxyz",
-    mayusminus: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
+    mayusculas: "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ",
+    minusculas: "abcdefghijklmnñopqrstuvwxyz",
+    mayusminus: "ABCDEFGHIJKLMNÑOPQRSTUVWXYZabcdefghijklmnñopqrstuvwxyz",
     simbolos: " !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~",
-    alfanumerico: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789",
+    alfanumerico: "ABCDEFGHIJKLMNÑOPQRSTUVWXYZabcdefghijklmnñopqrstuvwxyz0123456789",
     numeros: "0123456789",
     personalizado: customAlphabet
   };

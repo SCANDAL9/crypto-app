@@ -1,114 +1,115 @@
-/**
- * =============================================
- * 🔐 Cifrado Vigenère – CryptoLab
- * Implementación robusta con validaciones,
- * normalización y soporte de alfabetos personalizados.
- * =============================================
- */
-
-// ✅ Validar que el alfabeto sea válido
-function validateAlphabet(alphabet) {
-  if (typeof alphabet !== "string")
-    throw new Error("alphabet debe ser un string (ej: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ')");
-  if (alphabet.length < 2)
-    throw new Error("alphabet debe tener al menos 2 caracteres");
-  const set = new Set([...alphabet]);
-  if (set.size !== alphabet.length)
-    throw new Error("alphabet no debe contener caracteres duplicados");
-  return true;
-}
-
-// ✅ Validar parámetros tipo string
-function validateStringParam(param, name = "param") {
-  if (typeof param !== "string")
-    throw new Error(`${name} debe ser un string`);
-}
-
-// ✅ Normaliza texto según el alfabeto
-// Convierte a mayúsculas o minúsculas según el alfabeto dado
-function normalizeAndFilter(text, alphabet) {
-  const isUpper = alphabet === alphabet.toUpperCase();
-  const normalized = isUpper ? text.toUpperCase() : text.toLowerCase();
-  const allowed = new Set([...alphabet]);
-  return [...normalized].filter(ch => allowed.has(ch)).join("");
-}
-
-// ✅ Extiende la clave hasta el tamaño del texto
-function extendKey(text, key, alphabet) {
-  validateStringParam(key, "key");
-  if (key.length === 0)
-    throw new Error("La clave no puede estar vacía");
-
-  let extended = "";
+// Extiende la clave para que coincida con la longitud del texto
+function extendKeyVigenere(plaintext, key, alphabetType) {
+  let extendedKey = "";
   let keyIndex = 0;
-  for (let i = 0; i < text.length; i++) {
-    extended += key[keyIndex % key.length];
-    keyIndex++;
+
+  for (let i = 0; i < plaintext.length; i++) {
+    const ch = plaintext[i];
+
+    // Si el carácter está en el alfabeto, usamos la clave
+    if (alphabetType.includes(ch)) {
+      // Repetimos la clave circularmente
+      extendedKey += key[keyIndex % key.length];
+      keyIndex++;
+    } else {
+      // Para caracteres que no están en el alfabeto, no avanzamos la clave
+      extendedKey += ch;
+    }
   }
-  return extended;
+
+  return extendedKey;
 }
 
-/**
- * 🔒 Cifrar con Vigenère
- * @param {string} plaintext - texto claro
- * @param {string} key - clave de cifrado
- * @param {string} alphabet - alfabeto a usar
- * @returns {string} texto cifrado
- */
-export function cifrarVigenere(plaintext, key, alphabet) {
-  validateStringParam(plaintext, "plaintext");
-  validateStringParam(key, "key");
-  validateAlphabet(alphabet);
+export function cifrarVigenere(plaintext, key, alphabetType) {
+  if (typeof plaintext !== "string") {
+    throw new Error("El texto a cifrar debe ser una cadena de caracteres");
+  }
+  if (typeof key !== "string" || key.length === 0) {
+    throw new Error("La clave debe ser un string no vacío");
+  }
 
-  const cleanText = normalizeAndFilter(plaintext, alphabet);
-  const cleanKey = normalizeAndFilter(key, alphabet);
-  const extendedKey = extendKey(cleanText, cleanKey, alphabet);
+  // Filtramos la clave para que solo tenga caracteres válidos
+  let cleanKey = "";
+  for (const ch of key) {
+    if (alphabetType.includes(ch)) {
+      cleanKey += ch;
+    }
+  }
 
-  const n = alphabet.length;
+  if (cleanKey.length === 0) {
+    throw new Error(
+      "La clave debe contener al menos un carácter válido del alfabeto"
+    );
+  }
+
+  const extendedKey = extendKeyVigenere(plaintext, cleanKey, alphabetType);
+  const n = alphabetType.length;
   let result = "";
 
-  for (let i = 0; i < cleanText.length; i++) {
-    const p = alphabet.indexOf(cleanText[i]);
-    const k = alphabet.indexOf(extendedKey[i]);
-    if (p === -1 || k === -1) {
-      result += cleanText[i];
-    } else {
-      result += alphabet[(p + k) % n];
+  for (let i = 0; i < plaintext.length; i++) {
+    const ch = plaintext[i];
+    const keyChar = extendedKey[i];
+
+    // Si el carácter no está en el alfabeto, lo dejamos igual
+    if (!alphabetType.includes(ch)) {
+      result += ch;
+      continue;
     }
+
+    const pIndex = alphabetType.indexOf(ch);
+    const kIndex = alphabetType.indexOf(keyChar);
+
+    // Aplicamos la fórmula de Vigenère: (P + K) mod n
+    const cIndex = (pIndex + kIndex) % n;
+    result += alphabetType[cIndex];
   }
 
   return result;
 }
 
-/**
- * 🔓 Descifrar con Vigenère
- * @param {string} ciphertext - texto cifrado
- * @param {string} key - clave usada
- * @param {string} alphabet - alfabeto a usar
- * @returns {string} texto descifrado
- */
-export function descifrarVigenere(ciphertext, key, alphabet) {
-  validateStringParam(ciphertext, "ciphertext");
-  validateStringParam(key, "key");
-  validateAlphabet(alphabet);
+export function descifrarVigenere(ciphertext, key, alphabetType) {
+  if (typeof ciphertext !== "string") {
+    throw new Error("El texto cifrado debe ser una cadena de caracteres");
+  }
+  if (typeof key !== "string" || key.length === 0) {
+    throw new Error("La clave debe ser un string no vacío");
+  }
 
-  const cleanText = normalizeAndFilter(ciphertext, alphabet);
-  const cleanKey = normalizeAndFilter(key, alphabet);
-  const extendedKey = extendKey(cleanText, cleanKey, alphabet);
+  // Filtramos la clave para que solo tenga caracteres válidos
+  let cleanKey = "";
+  for (const ch of key) {
+    if (alphabetType.includes(ch)) {
+      cleanKey += ch;
+    }
+  }
 
-  const n = alphabet.length;
+  if (cleanKey.length === 0) {
+    throw new Error(
+      "La clave debe contener al menos un carácter válido del alfabeto"
+    );
+  }
+
+  const extendedKey = extendKeyVigenere(ciphertext, cleanKey, alphabetType);
+  const n = alphabetType.length;
   let result = "";
 
-  for (let i = 0; i < cleanText.length; i++) {
-    const c = alphabet.indexOf(cleanText[i]);
-    const k = alphabet.indexOf(extendedKey[i]);
-    if (c === -1 || k === -1) {
-      result += cleanText[i];
-    } else {
-      result += alphabet[(c - k + n) % n];
+  for (let i = 0; i < ciphertext.length; i++) {
+    const ch = ciphertext[i];
+    const keyChar = extendedKey[i];
+
+    // Si el carácter no está en el alfabeto, lo dejamos igual
+    if (!alphabetType.includes(ch)) {
+      result += ch;
+      continue;
     }
+
+    const cIndex = alphabetType.indexOf(ch);
+    const kIndex = alphabetType.indexOf(keyChar);
+
+    // Aplicamos la fórmula de descifrado: (C - K + n) mod n
+    const pIndex = (cIndex - kIndex + n) % n;
+    result += alphabetType[pIndex];
   }
 
   return result;
 }
-

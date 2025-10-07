@@ -34,6 +34,20 @@ const ciphers = [
     type: "Sustitución Polialfabética"
   },
 
+  // Criptoanálisis
+  {
+    id: "vigenere-brute-force",
+    name: "Vigenère Fuerza Bruta",
+    description: "Ataque criptográfico automático que rompe el cifrado Vigenère usando el método Kasiski.",
+    type: "Criptoanálisis"
+  },
+  {
+    id: "cesar-brute-force",
+    name: "César Fuerza Bruta",
+    description: "Ataque criptográfico que prueba todos los desplazamientos posibles para romper el cifrado César.",
+    type: "Criptoanálisis"
+  },
+
   // Sustitución Poligráfica
   {
     id: "playfair",

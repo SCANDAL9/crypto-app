@@ -1,4 +1,4 @@
-import { descifrarCesar } from "../cesar/cesar.js";
+import { descifrarCesar } from "../cesar.js";
 
 // Genera todas las posibles variantes de descifrado
 export function cesarFuerzaBruta(ciphertext, alphabetType) {
