@@ -1,3 +1,4 @@
+// src/ciphers_library/autokey.js
 function extendKeyAutokey(plaintext, key, alphabetType) {
   // Filtramos la clave inicial para que solo tenga caracteres válidos
   let extendedKey = "";

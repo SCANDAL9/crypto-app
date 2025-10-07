@@ -1,31 +1,33 @@
-// src/componentes/TransColumnPanel.jsx
-import React, { useState } from "react";
+import React from "react";
 import { useSettings } from "../../settings/SettingsContext.jsx";
 import { useCopyToClipboard } from "../../hooks/useCopyToClipboard.js";
 import OutputDisplay from "../OutputDisplay.jsx";
-// import { useTranspColumnCipher } from "../../hooks/ciphers/useTranspColumnCipher.js";
 import { useGenericCipher } from "../../hooks/useGenericCipher.js";
-import { cifrarTranspColumn, descifrarTranspColumn } from "../../ciphers_library/transposicionColumnas.js";
+import {
+  cifrarSustitucionSimple,
+  descifrarSustitucionSimple,
+} from "../../ciphers_library/sustitucionSimple.js";
 
 const PANEL_CONFIG = {
   encrypt: { title: "Cifrar 🔏", buttonText: "Cifrar" },
   decrypt: { title: "Descifrar 🔓", buttonText: "Descifrar" },
 };
 
-function TranspColumnPanel({ type }) {
-  const settings = useSettings(); 
+function SustitucionSimplePanel({ type }) {
+  const settings = useSettings();
 
-  const cipherFunctions = { 
-    type: 'transposicion-columnas', 
-    encrypt: cifrarTranspColumn, 
-    decrypt: descifrarTranspColumn 
+  // Definimos funciones de cifrado y descifrado
+  const cipherFunctions = {
+    type: "sustitucion-simple",
+    encrypt: cifrarSustitucionSimple,
+    decrypt: descifrarSustitucionSimple,
   };
 
+  // Hook genérico para manejar texto, clave y salida
   const { text, setText, key, setKey, output, processCipher } =
-    useGenericCipher(cipherFunctions, settings, "KEY");
+    useGenericCipher(cipherFunctions, settings, "CLAVE");
 
   const { copied, copyToClipboard } = useCopyToClipboard();
-
   const config = PANEL_CONFIG[type];
 
   const handleAction = () => processCipher(type);
@@ -37,21 +39,28 @@ function TranspColumnPanel({ type }) {
 
       <>
         <div className="form-group">
-          <label>Clave:</label>
+          <label>Palabra Clave:</label>
           <input
             type="text"
             value={key}
             onChange={(e) => setKey(e.target.value)}
+            placeholder="Ejemplo: CLAVE"
           />
+          <small>
+            ⚙️ Se usará esta clave para generar el alfabeto permutado.
+          </small>
         </div>
+
         <div className="form-group">
           <label>Texto:</label>
           <textarea
             rows="4"
             value={text}
             onChange={(e) => setText(e.target.value)}
+            placeholder="Escribe tu mensaje aquí..."
           />
         </div>
+
         <button onClick={handleAction}>{config.buttonText}</button>
       </>
 
@@ -60,4 +69,4 @@ function TranspColumnPanel({ type }) {
   );
 }
 
-export default TranspColumnPanel;
+export default SustitucionSimplePanel;

@@ -1,3 +1,4 @@
+// src/components/OutputDisplay.jsx
 import React from 'react';
 
 const OutputDisplay = ({ output, copied, onCopy }) => {

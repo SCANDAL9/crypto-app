@@ -26,7 +26,6 @@ function VigenerePanel({ type }) {
     useGenericCipher(cipherFunctions, settings, "CLAVE");
 
   const { copied, copyToClipboard } = useCopyToClipboard();
-
   const config = PANEL_CONFIG[type];
 
   const handleAction = () => processCipher(type);

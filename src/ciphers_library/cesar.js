@@ -1,3 +1,4 @@
+// src/ciphers_library/cesar.js
 export function cifrarCesar(plaintext, shift, alphabetType) {
   // Valida que el texto a cifrar sea una cadena; si no, lanza un error
   if (typeof plaintext !== "string") {
