@@ -76,6 +76,8 @@ function SettingsMain({ onClose, show = true }) {
                   onChange={(e) => setAlphabetType(e.target.value)}
                 >
                   <option value="mayusculas">Mayúsculas (A-Z)</option>
+                  <option value="ingles">Inglés (A-Z sin Ñ)</option>
+                  <option value="inglesmayusminus">Inglés (A-Z, a-z sin Ñ)</option>
                   <option value="minusculas">Minúsculas (a-z)</option>
                   <option value="mayusminus">Mayúsculas y Minúsculas (A-Z, a-z)</option>
                   <option value="simbolos">Símbolos (especiales)</option>

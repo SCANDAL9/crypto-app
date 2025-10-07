@@ -2,6 +2,9 @@
 export const getAlphabetByType = (alphabetType, customAlphabet) => {
   const alphabets = {
     mayusculas: "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ",
+    ingles: "ABCDEFGHIJKLMNOPQRSTUVWXYZ", // inglés puro
+    inglesminus: "abcdefghijklmnopqrstuvwxyz",
+    inglesmayusminus: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
     minusculas: "abcdefghijklmnñopqrstuvwxyz",
     mayusminus: "ABCDEFGHIJKLMNÑOPQRSTUVWXYZabcdefghijklmnñopqrstuvwxyz",
     simbolos: " !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~",
