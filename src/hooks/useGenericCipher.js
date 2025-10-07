@@ -16,9 +16,15 @@ export const useGenericCipher = (cipherFunctions, settings, defaultKey = "") => 
 
     const processCipher = (type) => {
         if (!text) return;
-        if (cipherFunctions.type === 'caesar' && (!key || isNaN(Number(key)))) return;
         
-        if (cipherFunctions.type !== 'caesar' && !key) return;
+        // Para cifrados que usan números (Caesar y RailFence)
+        if ((cipherFunctions.type === 'caesar' || cipherFunctions.type === 'railfence') && 
+            (!key || isNaN(Number(key)))) return;
+        
+        // Para cifrados que usan claves de texto (no Caesar ni RailFence)
+        if (cipherFunctions.type !== 'caesar' && 
+            cipherFunctions.type !== 'railfence' && 
+            !key) return;
 
         const alphabet = getAlphabetByType(alphabetType, customAlphabet);
         const processedText = processTextForCipher(
@@ -29,7 +35,7 @@ export const useGenericCipher = (cipherFunctions, settings, defaultKey = "") => 
             enableNormalization
         );
 
-        const processedKey = cipherFunctions.type === 'caesar'
+        const processedKey = (cipherFunctions.type === 'caesar' || cipherFunctions.type === 'railfence')
         ? Number(key)
         : key;
     

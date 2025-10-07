@@ -136,7 +136,7 @@ function aplicarReglaAEOS(analisisFrecuencias, alphabetType) {
   const alphabet = Array.isArray(alphabetType) ? alphabetType : alphabetType.split('');
   const n = alphabet.length;
   
-  // Índices de A, E, O, S en el alfabeto español (A=0, E=4, O=14, S=18)
+  // Índices de letras clave para la regla AEOS original
   const indiceA = alphabet.indexOf('A');
   const indiceE = alphabet.indexOf('E');
   const indiceO = alphabet.indexOf('O');
@@ -145,61 +145,104 @@ function aplicarReglaAEOS(analisisFrecuencias, alphabetType) {
   const resultados = [];
   
   for (const analisis of analisisFrecuencias) {
-    if (analisis.frecuencias.length < 4) {
+    if (analisis.frecuencias.length === 0) {
       resultados.push({
         subcriptograma: analisis.subcriptograma,
-        posibleClave: 'X', // No hay suficientes datos
+        posibleClave: 'X',
         confianza: 0
       });
       continue;
     }
     
-    // Obtener las 4 letras más frecuentes
-    const top4 = analisis.frecuencias.slice(0, 4);
+    const candidatos = [];
     
-    let mejorCandidato = null;
-    let mejorPuntuacion = 0;
-    
-    // Probar cada letra del top 4 como posible 'A'
-    for (let i = 0; i < top4.length; i++) {
-      const candidatoA = top4[i].ch;
-      const indiceCandiA = alphabet.indexOf(candidatoA);
+    // MÉTODO 1: Regla AEOS original (para casos que ya funcionan bien)
+    if (analisis.frecuencias.length >= 4) {
+      const top4 = analisis.frecuencias.slice(0, 4);
       
-      if (indiceCandiA === -1) continue;
-      
-      // Calcular desplazamiento: si candidatoA es realmente 'A', entonces
-      // desplazamiento = (indiceCandiA - indiceA + n) % n
-      const desplazamiento = (indiceCandiA - indiceA + n) % n;
-      
-      // Verificar si con este desplazamiento obtenemos E, O, S en posiciones esperadas
-      const expectedE = alphabet[(indiceE + desplazamiento) % n];
-      const expectedO = alphabet[(indiceO + desplazamiento) % n];
-      const expectedS = alphabet[(indiceS + desplazamiento) % n];
-      
-      // Contar cuántas de estas letras esperadas están en el top 4
-      let puntuacion = 0;
-      const letrasEnTop4 = top4.map(f => f.ch);
-      
-      if (letrasEnTop4.includes(candidatoA)) puntuacion++;
-      if (letrasEnTop4.includes(expectedE)) puntuacion++;
-      if (letrasEnTop4.includes(expectedO)) puntuacion++;
-      if (letrasEnTop4.includes(expectedS)) puntuacion++;
-      
-      if (puntuacion > mejorPuntuacion) {
-        mejorPuntuacion = puntuacion;
-        mejorCandidato = {
-          letraClave: alphabet[desplazamiento],
-          desplazamiento,
-          candidatoA,
-          expectedLetters: { E: expectedE, O: expectedO, S: expectedS }
-        };
+      for (let i = 0; i < top4.length; i++) {
+        const candidatoA = top4[i].ch;
+        const indiceCandiA = alphabet.indexOf(candidatoA);
+        
+        if (indiceCandiA === -1) continue;
+        
+        const desplazamiento = (indiceCandiA - indiceA + n) % n;
+        
+        const expectedE = alphabet[(indiceE + desplazamiento) % n];
+        const expectedO = alphabet[(indiceO + desplazamiento) % n];
+        const expectedS = alphabet[(indiceS + desplazamiento) % n];
+        
+        let puntuacion = 0;
+        const letrasEnTop4 = top4.map(f => f.ch);
+        
+        if (letrasEnTop4.includes(candidatoA)) puntuacion++;
+        if (letrasEnTop4.includes(expectedE)) puntuacion++;
+        if (letrasEnTop4.includes(expectedO)) puntuacion++;
+        if (letrasEnTop4.includes(expectedS)) puntuacion++;
+        
+        if (puntuacion >= 2) { // Solo considerar si hay al menos 2 coincidencias
+          candidatos.push({
+            letraClave: alphabet[desplazamiento],
+            metodo: 'AEOS-original',
+            puntuacion: puntuacion * 10, // Alto peso para AEOS exitoso
+            detalles: { candidatoA, puntuacionAEOS: puntuacion }
+          });
+        }
       }
     }
     
+    // MÉTODO 2: Estrategia E-frecuente (para casos problemáticos)
+    const masFrequente = analisis.frecuencias[0].ch;
+    const posMasFreq = alphabet.indexOf(masFrequente);
+    const posE = alphabet.indexOf('E');
+    
+    if (posMasFreq !== -1 && posE !== -1) {
+      const desplazamientoE = (posMasFreq - posE + n) % n;
+      candidatos.push({
+        letraClave: alphabet[desplazamientoE],
+        metodo: 'E-frecuente',
+        puntuacion: analisis.frecuencias[0].count * 0.3, // Peso menor que AEOS
+        detalles: { candidatoLetra: masFrequente, letraAsumida: 'E' }
+      });
+    }
+    
+    // MÉTODO 3: Estrategia A-frecuente
+    const posA = alphabet.indexOf('A');
+    if (posMasFreq !== -1 && posA !== -1) {
+      const desplazamientoA = (posMasFreq - posA + n) % n;
+      candidatos.push({
+        letraClave: alphabet[desplazamientoA],
+        metodo: 'A-frecuente',
+        puntuacion: analisis.frecuencias[0].count * 0.2,
+        detalles: { candidatoLetra: masFrequente, letraAsumida: 'A' }
+      });
+    }
+    
+    // MÉTODO 4: Segunda letra como E
+    if (analisis.frecuencias.length > 1) {
+      const segundaFreq = analisis.frecuencias[1].ch;
+      const posSegunda = alphabet.indexOf(segundaFreq);
+      
+      if (posSegunda !== -1 && posE !== -1) {
+        const desplazamientoE2 = (posSegunda - posE + n) % n;
+        candidatos.push({
+          letraClave: alphabet[desplazamientoE2],
+          metodo: 'segunda-E',
+          puntuacion: analisis.frecuencias[1].count * 0.25,
+          detalles: { candidatoLetra: segundaFreq, letraAsumida: 'E' }
+        });
+      }
+    }
+    
+    // Elegir el mejor candidato
+    let mejorCandidato = candidatos.reduce((mejor, actual) => {
+      return actual.puntuacion > mejor.puntuacion ? actual : mejor;
+    }, candidatos[0] || { letraClave: 'X', puntuacion: 0, metodo: 'fallback' });
+    
     resultados.push({
       subcriptograma: analisis.subcriptograma,
-      posibleClave: mejorCandidato ? mejorCandidato.letraClave : 'X',
-      confianza: mejorPuntuacion,
+      posibleClave: mejorCandidato.letraClave,
+      confianza: mejorCandidato.puntuacion,
       detalles: mejorCandidato
     });
   }

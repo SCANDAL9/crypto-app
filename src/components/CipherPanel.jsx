@@ -12,6 +12,10 @@ import XORPanel from "./Alison_Panel/XORPanel.jsx";
 import VigenereBruteForce from "./brute_force/VigenereBruteForce.jsx";
 import CesarBruteForce from "./brute_force/CesarBruteForce.jsx";
 
+// Ishizawa cifrados
+import PermutacionPanel from "./Ishizawa/PermutacionPanel.jsx";
+import RailFencePanel from "./Ishizawa/RailFencePanel.jsx";
+
 
 function CipherPanel({ type, method }) {
   switch (method) {
@@ -31,6 +35,10 @@ function CipherPanel({ type, method }) {
       return <VigenereBruteForce />;
     case "cesar-brute-force":
       return <CesarBruteForce />;
+    case "permutacion":
+      return <PermutacionPanel type={type} />;
+    case "rail-fence":
+      return <RailFencePanel type={type} />;
     default:
       return <div>Selecciona un cifrado</div>;
   }
